@@ -1,4 +1,4 @@
-import { user_id, user_records } from "../is_logged.js";
+import { user_id, user_records, generateRandomUserID } from "../is_logged.js";
 import { Notify } from "../vendor/notify.js";
 
 // profile form
@@ -223,7 +223,7 @@ function to_save_address(
           district: district_value,
           state: state_value,
           pincode: pincode_value,
-          address_id: Math.random().toString(16).slice(2),
+          address_id: generateRandomUserID(),
         };
         updatedObj.address.push(address_data);
 
@@ -381,19 +381,14 @@ function save_address_in_index(item, user_address = []) {
       break;
     }
   }
-
-  
   // Find the user in the user_records array and update its address array
 
-  user_records.forEach((add_data,index)=>{
-
-    if(add_data.user_id === par.user_id){
-
+  user_records.forEach((add_data, index) => {
+    if (add_data.user_id === par.user_id) {
       user_records[index] = updatedAddress;
     }
-  })
+  });
 
- 
   // Save the updated user_records array to local storage
   localStorage.setItem("users", JSON.stringify(user_records));
 
